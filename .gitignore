@@ -96,3 +96,7 @@ temp
 *.orig
 *.rej
 *.local
+
+# 上游 terminal 子模块的大体积运行时资产（约 61MB，不随源码仓库分发）
+# 首次编译前执行：bash scripts/fetch-terminal-assets.sh
+terminal/src/main/assets/ubuntu-noble-aarch64-pd-*.tar.xz

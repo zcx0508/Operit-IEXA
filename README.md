@@ -103,11 +103,21 @@
 
 前置：JDK 21 + Android SDK。
 
+首次编译前，先补齐 `terminal` 子模块的大体积运行时资产（约 61 MB 的 Ubuntu rootfs 镜像）。为不把大二进制放进源码仓库，本分支不跟踪该文件：
+
+```bash
+bash scripts/fetch-terminal-assets.sh
+```
+
+然后正常构建：
+
 ```bash
 ./gradlew :app:assembleRelease
 ```
 
 产物路径：`app/build/outputs/apk/release/app-release.apk`
+
+> 说明：`assembleRelease` 结束后会追加一个 `signRotatedReleaseApk` 任务（上游的 V3 轮换签名，需要 `local.properties` 里的 `APK_ROTATION_NEW_STORE_FILE`）。自建时若没有该配置，`packageRelease` 已经产出可安装的签名 APK，忽略该任务的失败即可，或用 `./gradlew :app:assembleRelease -x signRotatedReleaseApk`。
 
 上游构建流程中涉及的外部归档与子模块要求，请参考 [README.upstream.md](README.upstream.md) 与上游构建文档。本分支未修改构建脚本。
 
